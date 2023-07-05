@@ -18,6 +18,12 @@ module "eks" {
     coredns = {
       most_recent = true
     }
+    aws-guardduty-agent = {
+      most_recent = true
+    }
+    aws-ebs-csi-driver = {
+      most_recent = true
+    }
     kube-proxy = {
       most_recent = true
     }
