@@ -37,6 +37,21 @@ module "eks" {
   control_plane_subnet_ids = module.vpc.intra_subnets
 
   manage_aws_auth_configmap = true
+  aws_auth_roles = [
+    {
+      rolearn  = module.karpenter.role_arn
+      username = "system:node:{{EC2PrivateDNSName}}"
+      groups = [
+        "system:bootstrappers",
+        "system:nodes",
+      ]
+    },
+  ]
+
+
+################################
+# Node Groups
+################################
 
   eks_managed_node_group_defaults = {
     ami_type       = "BOTTLEROCKET_x86_64"
@@ -49,7 +64,7 @@ module "eks" {
     # and then turn this off after the cluster/node group is created. Without this initial policy,
     # the VPC CNI fails to assign IPs and nodes cannot join the cluster
     # See https://github.com/aws/containers-roadmap/issues/1666 for more context
-    iam_role_attach_cni_policy = true
+    iam_role_attach_cni_policy = false
   }
 
   eks_managed_node_groups = {
@@ -107,7 +122,6 @@ module "eks" {
       iam_role_tags = local.tags
       iam_role_additional_policies = {
         AmazonEC2ContainerRegistryReadOnly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-        # additional                         = aws_iam_policy.node_additional.arn
       }
 
       tags = local.tags
@@ -121,25 +135,6 @@ module "eks" {
 # Supporting Resources
 ################################################################################
 
-# resource "aws_iam_policy" "node_additional" {
-#   name        = "${local.name}-additional"
-#   description = "Example usage of node additional policy"
-
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#         Action = [
-#           "ec2:Describe*",
-#         ]
-#         Effect   = "Allow"
-#         Resource = "*"
-#       },
-#     ]
-#   })
-
-#   tags = local.tags
-# }
 
 data "aws_ami" "eks_default_bottlerocket" {
   most_recent = true
@@ -148,54 +143,5 @@ data "aws_ami" "eks_default_bottlerocket" {
   filter {
     name   = "name"
     values = ["bottlerocket-aws-k8s-${local.cluster_version}-x86_64-*"]
-  }
-}
-
-################################################################################
-# Tags for the ASG to support cluster-autoscaler scale up from 0
-################################################################################
-
-locals {
-
-  # We need to lookup K8s taint effect from the AWS API value
-  taint_effects = {
-    NO_SCHEDULE        = "NoSchedule"
-    NO_EXECUTE         = "NoExecute"
-    PREFER_NO_SCHEDULE = "PreferNoSchedule"
-  }
-
-  cluster_autoscaler_label_tags = merge([
-    for name, group in module.eks.eks_managed_node_groups : {
-      for label_name, label_value in coalesce(group.node_group_labels, {}) : "${name}|label|${label_name}" => {
-        autoscaling_group = group.node_group_autoscaling_group_names[0],
-        key               = "k8s.io/cluster-autoscaler/node-template/label/${label_name}",
-        value             = label_value,
-      }
-    }
-  ]...)
-
-  cluster_autoscaler_taint_tags = merge([
-    for name, group in module.eks.eks_managed_node_groups : {
-      for taint in coalesce(group.node_group_taints, []) : "${name}|taint|${taint.key}" => {
-        autoscaling_group = group.node_group_autoscaling_group_names[0],
-        key               = "k8s.io/cluster-autoscaler/node-template/taint/${taint.key}"
-        value             = "${taint.value}:${local.taint_effects[taint.effect]}"
-      }
-    }
-  ]...)
-
-  cluster_autoscaler_asg_tags = merge(local.cluster_autoscaler_label_tags, local.cluster_autoscaler_taint_tags)
-}
-
-resource "aws_autoscaling_group_tag" "cluster_autoscaler_label_tags" {
-  for_each = local.cluster_autoscaler_asg_tags
-
-  autoscaling_group_name = each.value.autoscaling_group
-
-  tag {
-    key   = each.value.key
-    value = each.value.value
-
-    propagate_at_launch = false
   }
 }
