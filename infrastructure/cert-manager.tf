@@ -9,6 +9,11 @@ resource "helm_release" "cert_manager" {
   values = [file("values.cert-manager.yaml")]
 
   set {
+    name = "installCRDs"
+    value = "true"
+  }
+
+  set {
     name  = "serviceAccount.create"
     value = "true"
   }
