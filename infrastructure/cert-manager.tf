@@ -48,5 +48,5 @@ spec:
             region: ${local.region}
             role: ${module.cert_manager_irsa.iam_role_arn}
 EOF
-  depends_on = [helm_release.external_secrets]
+  depends_on = [helm_release.cert_manager]
 }
