@@ -26,8 +26,8 @@ module "eks" {
       most_recent = true
     }
     vpc-cni = {
-      most_recent        = true
-      preserve           = true
+      addon_version = "v1.12.6-eksbuild.2"
+      preserve      = true
       service_account_role_arn = module.vpc_cni_irsa.iam_role_arn
     }
   }
