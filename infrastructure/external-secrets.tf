@@ -21,6 +21,9 @@ resource "helm_release" "external_secrets" {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
     value = module.ext_secrets_irsa.iam_role_arn
   }
+  depends_on = [ 
+    module.eks
+  ]
 }
 
 resource "kubectl_manifest" "parameter_store_backend" {
