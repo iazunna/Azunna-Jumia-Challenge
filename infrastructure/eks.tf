@@ -18,9 +18,6 @@ module "eks" {
     coredns = {
       most_recent = true
     }
-    aws-guardduty-agent = {
-      most_recent = true
-    }
     aws-ebs-csi-driver = {
       most_recent = true
       service_account_role_arn = module.ebs_csi_irsa.iam_role_arn
@@ -32,11 +29,6 @@ module "eks" {
       most_recent        = true
       preserve           = true
       service_account_role_arn = module.vpc_cni_irsa.iam_role_arn
-      configuration_values = jsonencode({
-        env = {
-          CLUSTER_NAME = local.name
-        }
-      })
     }
   }
 
