@@ -23,18 +23,18 @@ module "eks" {
     }
     aws-ebs-csi-driver = {
       most_recent = true
+      service_account_role_arn = module.ebs_csi_irsa.iam_role_arn
     }
     kube-proxy = {
       most_recent = true
     }
     vpc-cni = {
-      most_recent              = true
-      before_compute           = true
+      most_recent        = true
+      preserve           = true
       service_account_role_arn = module.vpc_cni_irsa.iam_role_arn
       configuration_values = jsonencode({
         env = {
-          # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
-          AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG = "true"
+          CLUSTER_NAME = local.name
         }
       })
     }
@@ -88,7 +88,7 @@ module "eks" {
         {
           key    = "application"
           value  = "JumiaPhoneValidator"
-          effect = "NO_SCHEDULE"
+          effect = "PREFER_NO_SCHEDULE"
         }
       ]
 
@@ -115,7 +115,7 @@ module "eks" {
       iam_role_tags = local.tags
       iam_role_additional_policies = {
         AmazonEC2ContainerRegistryReadOnly = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-        additional                         = aws_iam_policy.node_additional.arn
+        # additional                         = aws_iam_policy.node_additional.arn
       }
 
       tags = local.tags
@@ -129,25 +129,25 @@ module "eks" {
 # Supporting Resources
 ################################################################################
 
-resource "aws_iam_policy" "node_additional" {
-  name        = "${local.name}-additional"
-  description = "Example usage of node additional policy"
+# resource "aws_iam_policy" "node_additional" {
+#   name        = "${local.name}-additional"
+#   description = "Example usage of node additional policy"
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "ec2:Describe*",
-        ]
-        Effect   = "Allow"
-        Resource = "*"
-      },
-    ]
-  })
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [
+#       {
+#         Action = [
+#           "ec2:Describe*",
+#         ]
+#         Effect   = "Allow"
+#         Resource = "*"
+#       },
+#     ]
+#   })
 
-  tags = local.tags
-}
+#   tags = local.tags
+# }
 
 data "aws_ami" "eks_default_bottlerocket" {
   most_recent = true
