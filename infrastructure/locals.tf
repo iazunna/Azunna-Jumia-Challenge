@@ -3,6 +3,7 @@ data "aws_availability_zones" "available" {}
 locals {
   name = "jumia-phone-validator"
   cluster_version = "1.27"
+  db_name = "validator_backend"
   tags = {
     Managed-by = "Terraform"
     Environment = "dev"
