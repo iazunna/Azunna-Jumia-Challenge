@@ -23,7 +23,8 @@ resource "helm_release" "cert_manager" {
     value = module.cert_manager_irsa.iam_role_arn
   }
   depends_on = [ 
-    module.eks
+    module.eks,
+    helm_release.ingress
   ]
 }
 

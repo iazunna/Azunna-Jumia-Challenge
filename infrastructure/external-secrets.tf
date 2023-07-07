@@ -22,7 +22,8 @@ resource "helm_release" "external_secrets" {
     value = module.ext_secrets_irsa.iam_role_arn
   }
   depends_on = [ 
-    module.eks
+    module.eks,
+    helm_release.ingress
   ]
 }
 
