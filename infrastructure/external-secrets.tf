@@ -21,14 +21,14 @@ resource "helm_release" "external_secrets" {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
     value = module.ext_secrets_irsa.iam_role_arn
   }
-  depends_on = [ 
+  depends_on = [
     module.eks,
     helm_release.ingress
   ]
 }
 
 resource "kubectl_manifest" "parameter_store_backend" {
-  yaml_body = <<EOF
+  yaml_body  = <<EOF
 apiVersion: external-secrets.io/v1beta1
 kind: ClusterSecretStore
 metadata:
@@ -48,7 +48,7 @@ EOF
 }
 
 resource "kubectl_manifest" "sm_backend" {
-  yaml_body = <<EOF
+  yaml_body  = <<EOF
 apiVersion: external-secrets.io/v1beta1
 kind: ClusterSecretStore
 metadata:

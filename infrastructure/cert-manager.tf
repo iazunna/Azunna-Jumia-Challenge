@@ -6,10 +6,10 @@ resource "helm_release" "cert_manager" {
   namespace        = "cert-manager"
   create_namespace = true
   atomic           = true
-  values = [file("values.cert-manager.yaml")]
+  values           = [file("values.cert-manager.yaml")]
 
   set {
-    name = "installCRDs"
+    name  = "installCRDs"
     value = "true"
   }
 
@@ -27,14 +27,14 @@ resource "helm_release" "cert_manager" {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
     value = module.cert_manager_irsa.iam_role_arn
   }
-  depends_on = [ 
+  depends_on = [
     module.eks,
     helm_release.ingress
   ]
 }
 
 resource "kubectl_manifest" "cluster_issuer" {
-  yaml_body = <<EOF
+  yaml_body  = <<EOF
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:

@@ -1,5 +1,5 @@
 locals {
-    ingress_ports = ["22", "80", "443", "8888"]
+  ingress_ports = ["22", "80", "443", "8888"]
 }
 
 resource "aws_security_group" "bastion" {
@@ -73,12 +73,12 @@ resource "aws_iam_instance_profile" "systems_manager" {
 }
 
 resource "aws_instance" "private" {
-  ami                    = data.aws_ami.amazon-linux-2.id
-  instance_type          = "t2-micro"
-  iam_instance_profile   = aws_iam_instance_profile.systems_manager.name
-  subnet_id              = module.vpc.public_subnets[0]
-  vpc_security_group_ids = [aws_security_group.bastion.id]
-  associate_public_ip_address  = true
+  ami                         = data.aws_ami.amazon-linux-2.id
+  instance_type               = "t2-micro"
+  iam_instance_profile        = aws_iam_instance_profile.systems_manager.name
+  subnet_id                   = module.vpc.public_subnets[0]
+  vpc_security_group_ids      = [aws_security_group.bastion.id]
+  associate_public_ip_address = true
 
   root_block_device {
     volume_size = 20
@@ -91,7 +91,7 @@ resource "aws_instance" "private" {
     }
   )
 
-  volume_tags = merge(var.tags, tomap({
+  volume_tags = merge(local.tags, tomap({
     "Name" = "bastion-ebs"
     })
   )

@@ -1,10 +1,10 @@
 data "aws_availability_zones" "available" {}
 
 locals {
-  name = "jumia-phone-validator"
+  name    = "jumia-phone-validator"
   db_name = "validator_backend"
   tags = {
-    Managed-by = "Terraform"
+    Managed-by  = "Terraform"
     Environment = "dev"
   }
   # Networking Locals
@@ -15,7 +15,7 @@ locals {
   # EKS Locals
   cluster_version = "1.27"
   node_labels = {
-      type = "eks-managed"
-      ManagedBy  = "Terraform"
-    }
+    type      = "eks-managed"
+    ManagedBy = "Terraform"
+  }
 }

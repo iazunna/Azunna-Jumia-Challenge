@@ -1,9 +1,9 @@
 resource "helm_release" "jenkins" {
-  name       = "jenkins"
-  repository = "https://charts.jenkins.io"
-  version = "4.3.30"
-  chart      = "jenkins"
-  namespace  = "jenkins"
+  name             = "jenkins"
+  repository       = "https://charts.jenkins.io"
+  version          = "4.3.30"
+  chart            = "jenkins"
+  namespace        = "jenkins"
   create_namespace = true
 
   values = [
@@ -22,17 +22,17 @@ resource "helm_release" "jenkins" {
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.jenkins_agent_irsa.iam_role_arn
+    value = module.jenkins_irsa.iam_role_arn
   }
 
   set {
-    name = "serviceAccountAgent.create"
-    value =  "true"
+    name  = "serviceAccountAgent.create"
+    value = "true"
   }
 
   set {
-    name = "persistence.storageClass"
-    value =  "ebs-sc"
+    name  = "persistence.storageClass"
+    value = "ebs-sc"
   }
 
   set {
@@ -42,10 +42,10 @@ resource "helm_release" "jenkins" {
 
   set {
     name  = "serviceAccountAgent.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = module.jenkins_agent_irsa.iam_role_arn
+    value = module.jenkins_irsa.iam_role_arn
   }
 
-  depends_on = [ 
+  depends_on = [
     module.eks,
     helm_release.ingress,
     kubernetes_secret.jenkins,
@@ -56,7 +56,7 @@ resource "helm_release" "jenkins" {
 
 resource "kubernetes_secret" "jenkins" {
   metadata {
-    name = "github-credentials"
+    name      = "github-credentials"
     namespace = "jenkins"
   }
 

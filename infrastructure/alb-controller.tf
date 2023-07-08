@@ -8,7 +8,7 @@ resource "helm_release" "ingress" {
 
   set {
     name  = "clusterName"
-    value = module.eks.cluster_name 
+    value = module.eks.cluster_name
   }
 
   set {
@@ -26,7 +26,7 @@ resource "helm_release" "ingress" {
     value = module.alb_controller_irsa.iam_role_arn
   }
 
-  depends_on = [ 
+  depends_on = [
     module.eks
   ]
 }

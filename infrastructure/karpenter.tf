@@ -58,7 +58,7 @@ resource "helm_release" "karpenter" {
     value = "1Gi"
   }
 
-  depends_on = [ 
+  depends_on = [
     module.eks,
     helm_release.ingress
   ]

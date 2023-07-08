@@ -3,7 +3,7 @@ module "vpc_cni_irsa" {
   version = "~> 5.0"
 
   role_name_prefix      = "VPC-CNI-IRSA"
-  create_role = true
+  create_role           = true
   attach_vpc_cni_policy = true
   vpc_cni_enable_ipv4   = true
 
@@ -21,8 +21,8 @@ module "cert_manager_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name_prefix      = "CERT-MANAGER-IRSA"
-  create_role = true
+  role_name_prefix           = "CERT-MANAGER-IRSA"
+  create_role                = true
   attach_cert_manager_policy = true
 
   oidc_providers = {
@@ -40,7 +40,7 @@ module "ebs_csi_irsa" {
   version = "~> 5.0"
 
   role_name_prefix      = "EBS-CSI-IRSA"
-  create_role = true
+  create_role           = true
   attach_ebs_csi_policy = true
 
   oidc_providers = {
@@ -57,9 +57,9 @@ module "alb_controller_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name_prefix      = "ALB-CONTROLLER-IRSA"
-  create_role = true
-  attach_load_balancer_controller_policy = true
+  role_name_prefix                                                = "ALB-CONTROLLER-IRSA"
+  create_role                                                     = true
+  attach_load_balancer_controller_policy                          = true
   attach_load_balancer_controller_targetgroup_binding_only_policy = true
 
   oidc_providers = {
@@ -76,8 +76,8 @@ module "ext_secrets_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name_prefix      = "EXT-SECRETS-IRSA"
-  create_role = true
+  role_name_prefix               = "EXT-SECRETS-IRSA"
+  create_role                    = true
   attach_external_secrets_policy = true
 
   oidc_providers = {
@@ -94,14 +94,14 @@ module "adot_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name_prefix      = "ADOT-IRSA"
-  create_role = true
+  role_name_prefix                                = "ADOT-IRSA"
+  create_role                                     = true
   attach_amazon_managed_service_prometheus_policy = true
-  role_policy_arns = [
-    "arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess",
-    "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess",
-    "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
-  ]
+  role_policy_arns = {
+    policy0 = "arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess"
+    policy1 = "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
+    policy2 = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+  }
 
   oidc_providers = {
     main = {
@@ -117,11 +117,11 @@ module "jenkins_irsa" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   version = "~> 5.0"
 
-  role_name_prefix      = "JENKINS-IRSA"
-  create_role = true
-  role_policy_arns = [
-    aws_iam_policy.jenkins_eks.arn
-  ]
+  role_name_prefix = "JENKINS-IRSA"
+  create_role      = true
+  role_policy_arns = {
+    policy0 = aws_iam_policy.jenkins_eks.arn
+  }
 
   oidc_providers = {
     main = {
