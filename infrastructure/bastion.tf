@@ -83,7 +83,7 @@ resource "aws_instance" "private" {
     volume_size = 20
   }
 
-  user_data = templatefile("../scripts/bastion-setup.sh")
+  user_data = file("../scripts/bastion-setup.sh")
 
   tags = merge(local.tags, {
     "Name" = "bastion-ec2"
