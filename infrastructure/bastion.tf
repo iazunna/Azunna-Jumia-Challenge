@@ -63,12 +63,11 @@ resource "aws_iam_role" "role" {
 
 resource "aws_iam_role_policy_attachment" "role-policy-attachment" {
   role       = aws_iam_role.role.name
-  count      = length(var.iam_policy_arn)
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
 resource "aws_iam_instance_profile" "systems_manager" {
-  name = "${local.base_name}-instance-profile"
+  name = "bastion-instance-profile"
   role = aws_iam_role.role.name
 }
 
