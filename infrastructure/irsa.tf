@@ -89,3 +89,71 @@ module "ext_secrets_irsa" {
 
   tags = local.tags
 }
+
+module "adot_irsa" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version = "~> 5.0"
+
+  role_name_prefix      = "ADOT-IRSA"
+  create_role = true
+  attach_amazon_managed_service_prometheus_policy = true
+  role_policy_arns = [
+    "arn:aws:iam::aws:policy/AmazonPrometheusRemoteWriteAccess",
+    "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess",
+    "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+  ]
+
+  oidc_providers = {
+    main = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["default:adot-collector"]
+    }
+  }
+
+  tags = local.tags
+}
+
+module "jenkins_irsa" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version = "~> 5.0"
+
+  role_name_prefix      = "JENKINS-IRSA"
+  create_role = true
+  role_policy_arns = [
+    aws_iam_policy.jenkins_eks.arn
+  ]
+
+  oidc_providers = {
+    main = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["jenkins:jenkins-sa", "jenkins:jenkins-agent-sa"]
+    }
+  }
+
+  tags = local.tags
+}
+
+data "aws_iam_policy_document" "jenkins_eks" {
+
+  statement {
+    actions = [
+      "eks:ListClusters",
+      "eks:AccessKubernetesApi",
+      "eks:DescribeCluster",
+      "eks:ListNodegroups"
+    ]
+
+    resources = [module.eks.cluster_arn]
+  }
+
+}
+
+resource "aws_iam_policy" "jenkins_eks" {
+
+  name_prefix = "Jenkins_Policy-"
+  path        = "/"
+  description = "Provides permissions for Jenkins and Jenkins Agents"
+  policy      = data.aws_iam_policy_document.jenkins_eks.json
+
+  tags = local.tags
+}
