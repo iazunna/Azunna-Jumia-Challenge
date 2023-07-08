@@ -58,7 +58,7 @@ resource "aws_iam_role" "role" {
   name               = "bastion-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 
-  tags = var.tags
+  tags = local.tags
 }
 
 resource "aws_iam_role_policy_attachment" "role-policy-attachment" {
