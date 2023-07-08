@@ -71,9 +71,9 @@ resource "aws_iam_instance_profile" "systems_manager" {
   role = aws_iam_role.role.name
 }
 
-resource "aws_instance" "private" {
+resource "aws_instance" "bastion" {
   ami                         = data.aws_ami.amazon-linux-2.id
-  instance_type               = "t2-micro"
+  instance_type               = "t3.small"
   iam_instance_profile        = aws_iam_instance_profile.systems_manager.name
   subnet_id                   = module.vpc.public_subnets[0]
   vpc_security_group_ids      = [aws_security_group.bastion.id]

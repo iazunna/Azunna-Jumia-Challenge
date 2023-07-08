@@ -3,8 +3,8 @@ resource "helm_release" "jenkins" {
   repository       = "https://charts.jenkins.io"
   version          = "4.3.30"
   chart            = "jenkins"
-  namespace        = "jenkins"
-  create_namespace = true
+  namespace        = kubernetes_namespace.jenkins.metadata.name
+  create_namespace = false
 
   values = [
     "${file("values.jenkins.yaml")}"
@@ -53,11 +53,17 @@ resource "helm_release" "jenkins" {
   ]
 }
 
+resource "kubernetes_namespace" "jenkins" {
+  metadata {
+    name = "jenkins"
+  }
+}
+
 
 resource "kubernetes_secret" "jenkins" {
   metadata {
     name      = "github-credentials"
-    namespace = "jenkins"
+    namespace = kubernetes_namespace.jenkins.metadata.name
   }
 
   data = {

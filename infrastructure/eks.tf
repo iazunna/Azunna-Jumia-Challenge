@@ -95,7 +95,7 @@ module "eks" {
 
     create_iam_role          = true
     iam_role_name            = "eks-managed-node-group-role"
-    iam_role_use_name_prefix = false
+    iam_role_use_name_prefix = true
     iam_role_description     = "EKS managed node group for jumia phone validator app"
     iam_role_tags            = local.tags
     iam_role_additional_policies = {
