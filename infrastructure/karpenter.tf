@@ -1,5 +1,3 @@
-data "aws_ecrpublic_authorization_token" "token" {}
-
 module "karpenter" {
   source = "terraform-aws-modules/eks/aws//modules/karpenter"
 
@@ -12,8 +10,8 @@ module "karpenter" {
 }
 
 resource "helm_release" "karpenter" {
-  repository_username = data.aws_ecrpublic_authorization_token.token.user_name
-  repository_password = data.aws_ecrpublic_authorization_token.token.password
+  repository_username = "anonymous"
+  repository_password = ""
   lifecycle {
     ignore_changes = [ repository_password ]
   }
