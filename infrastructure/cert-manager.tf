@@ -48,7 +48,10 @@ spec:
       # Secret resource that will be used to store the account's private key.
       name: letsencrypt-test-issuer-account-key
     solvers:
-      - dns01:
+      - selector:
+          dnsZones:
+            - "jumia-challenge.com"
+        dns01:
           route53:
             region: ${local.region}
 EOF

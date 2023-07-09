@@ -24,6 +24,7 @@ module "cert_manager_irsa" {
   role_name_prefix           = "CERT-MANAGER-IRSA"
   create_role                = true
   attach_cert_manager_policy = true
+  cert_manager_hosted_zone_arns = [aws_route53_zone.jumia-challenge.arn]
 
   oidc_providers = {
     main = {
