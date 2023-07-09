@@ -40,3 +40,18 @@ module "db" {
   monitoring_role_use_name_prefix       = true
   monitoring_role_description           = "RDS DB monitoring role"
 }
+
+resource "random_password" "validator-app-password" {
+  length      = 24
+  min_lower   = 2
+  min_upper   = 2
+  min_numeric = 2
+  min_special = 2
+  special     = true
+}
+
+resource "aws_ssm_parameter" "validator-app-password" {
+  name  = "validator-backend-db-password"
+  type  = "SecureString"
+  value = random_password.validator-app-password.result
+}
