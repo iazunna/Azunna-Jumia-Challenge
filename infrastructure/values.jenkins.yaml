@@ -38,6 +38,7 @@ controller:
       #         signingRegion: eu-west-2
 
   jenkinsUrl: jenkins.demo.internal
+  serviceType: NodePort
   ingress:
     enabled: true
     # Override for the default paths that map requests to the backend
@@ -55,6 +56,7 @@ controller:
     apiVersion: "networking.k8s.io/v1"
     labels: {}
     annotations:
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
       cert-manager.io/cluster-issuer: letsencrypt-test
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
