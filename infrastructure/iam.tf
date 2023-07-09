@@ -29,8 +29,11 @@ data "aws_iam_policy_document" "iam_pass_role" {
 resource "aws_iam_role" "admin_role" {
   name                 = "admin_role"
   path                 = "/users/"
-  policy               = data.aws_iam_policy_document.iam_pass_role.json
   assume_role_policy   = data.aws_iam_policy_document.admin_assume_role.json
   managed_policy_arns  = ["arn:aws:iam::aws:policy/AdministratorAccess"]
   max_session_duration = 43200
+  inline_policy {
+    name = "iamPassRole_policy"
+    policy = data.aws_iam_policy_document.iam_pass_role.json
+  }
 }
