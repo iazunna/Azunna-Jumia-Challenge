@@ -20,27 +20,6 @@ module "ecr_registry_backend" {
     ]
   })
 
-  # Registry Policy
-  create_registry_policy = true
-  registry_policy        = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Sid    = "testpolicy",
-        Effect = "Allow",
-        Principal = {
-          "AWS" : "arn:aws:iam::012345678901:root"
-        },
-        Action = [
-          "ecr:ReplicateImage"
-        ],
-        Resource = [
-          "arn:aws:ecr:us-east-1:012345678901:repository/*"
-        ]
-      }
-    ]
-  })
-
   # Registry Pull Through Cache Rules
   registry_pull_through_cache_rules = {
     pub = {
@@ -88,27 +67,6 @@ module "ecr_registry_backend" {
         action = {
           type = "expire"
         }
-      }
-    ]
-  })
-
-  # Registry Policy
-  create_registry_policy = true
-  registry_policy        = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Sid    = "testpolicy",
-        Effect = "Allow",
-        Principal = {
-          "AWS" : "arn:aws:iam::012345678901:root"
-        },
-        Action = [
-          "ecr:ReplicateImage"
-        ],
-        Resource = [
-          "arn:aws:ecr:us-east-1:012345678901:repository/*"
-        ]
       }
     ]
   })
