@@ -16,4 +16,5 @@ resource "aws_iam_role" "admin_role" {
   path               = "/users/"
   assume_role_policy = data.aws_iam_policy_document.admin_assume_role.json
   managed_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  max_session_duration = 43200
 }
