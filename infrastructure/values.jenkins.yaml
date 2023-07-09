@@ -70,7 +70,7 @@ controller:
     # configures the hostname e.g. jenkins.example.com
     hostName:
     tls:
-    - secretName: jenkins.jumia-challenge.com
+    - secretName: jenkins-controller-tls
       hosts:
         - jenkins.jumia-challenge.com
 
