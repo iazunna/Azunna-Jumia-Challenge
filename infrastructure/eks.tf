@@ -51,8 +51,8 @@ module "eks" {
       ]
     },
     {
-      rolearn = aws_iam_role.admin_role.arn
-      username = "adminuser:{{SessionName}}"
+      rolearn  = aws_iam_role.admin_role.arn
+      username = "azunna"
       groups   = ["system:masters"]
     }
   ]

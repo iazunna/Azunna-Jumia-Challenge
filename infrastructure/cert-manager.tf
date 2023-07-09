@@ -6,10 +6,10 @@ resource "helm_release" "cert_manager" {
   namespace        = "cert-manager"
   create_namespace = true
   atomic           = true
-#   values           = [file("values.cert-manager.yaml")]
+  #   values           = [file("values.cert-manager.yaml")]
 
   set {
-    name = "automountServiceAccountToken"
+    name  = "automountServiceAccountToken"
     value = "true"
   }
 
@@ -24,7 +24,7 @@ resource "helm_release" "cert_manager" {
   }
 
   set {
-    name = "serviceAccount.automountServiceAccountToken"
+    name  = "serviceAccount.automountServiceAccountToken"
     value = "true"
   }
 

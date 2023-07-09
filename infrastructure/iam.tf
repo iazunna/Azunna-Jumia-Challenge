@@ -11,10 +11,26 @@ data "aws_iam_policy_document" "admin_assume_role" {
   }
 }
 
+data "aws_iam_policy_document" "iam_pass_role" {
+  statement {
+    effect    = "Allow"
+    actions   = ["iam:PassRole"]
+    resources = ["*"]
+    condition {
+      test     = "StringEquals"
+      variable = "iam:PassedToService"
+      values = [
+        "eks.amazonaws.com"
+      ]
+    }
+  }
+}
+
 resource "aws_iam_role" "admin_role" {
-  name               = "admin_role"
-  path               = "/users/"
-  assume_role_policy = data.aws_iam_policy_document.admin_assume_role.json
-  managed_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  name                 = "admin_role"
+  path                 = "/users/"
+  policy               = data.aws_iam_policy_document.iam_pass_role.json
+  assume_role_policy   = data.aws_iam_policy_document.admin_assume_role.json
+  managed_policy_arns  = ["arn:aws:iam::aws:policy/AdministratorAccess"]
   max_session_duration = 43200
 }
