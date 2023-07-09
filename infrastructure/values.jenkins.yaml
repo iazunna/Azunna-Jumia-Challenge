@@ -72,7 +72,7 @@ controller:
         - jenkins.demo.internal
 
   prometheus:
-    enabled: true
+    enabled: false
 
 agent:
   yamlTemplate: |-
