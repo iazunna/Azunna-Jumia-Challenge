@@ -49,7 +49,7 @@ module "ecr_registry_backend" {
   tags = local.tags
 }
 
-module "ecr_registry_backend" {
+module "ecr_registry_frontend" {
   source = "terraform-aws-modules/ecr/aws"
 
   repository_name = "validator-frontend"
