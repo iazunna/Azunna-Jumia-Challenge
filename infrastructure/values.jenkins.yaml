@@ -4,9 +4,11 @@ controller:
     - junit:1217.v4297208a_a_b_ce
     - aws-credentials:191.vcb_f183ce58b_9
     - role-strategy:665.v4d4f871dc768
-  existingSecret: github-credentials
   additionalExistingSecrets:
     - name: github-credentials
+      keyName: github-username
+    - name: github-credentials
+      keyName: github-password
   JCasC:
     configScripts:
       jenkins-casc-configs: |
@@ -17,9 +19,9 @@ controller:
               - usernamePassword:
                   description: "github access username password"
                   id: "github_username_pass"
-                  password: ${github-password}
+                  password: ${github-credentials-github-password}
                   scope: GLOBAL
-                  username: ${github-username}
+                  username: ${github-credentials-github-username}
       role-strategy: |
         jenkins:
           authorizationStrategy:
