@@ -3,7 +3,7 @@ module "ecr_registry" {
   for_each = toset(local.repositories)
   source = "terraform-aws-modules/ecr/aws"
 
-  repository_name = "validator-backend"
+  repository_name = each.value
   repository_image_tag_mutability = "IMMUTABLE"
   repository_lifecycle_policy = jsonencode({
     rules = [
@@ -26,7 +26,7 @@ module "ecr_registry" {
   # Registry Pull Through Cache Rules
   registry_pull_through_cache_rules = {
     pub = {
-      ecr_repository_prefix = "ecr-public"
+      ecr_repository_prefix = "ecr-public-${each.key}"
       upstream_registry_url = "public.ecr.aws"
     }
   }
