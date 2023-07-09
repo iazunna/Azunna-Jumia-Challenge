@@ -52,7 +52,7 @@ module "eks" {
     },
     {
       rolearn  = aws_iam_role.admin_role.arn
-      username = "azunna"
+      username = "admin_role"
       groups   = ["system:masters"]
     }
   ]
