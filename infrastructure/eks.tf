@@ -249,3 +249,15 @@ resource "aws_security_group" "remote_access" {
 
   tags = merge(local.tags, { Name = "${local.name}-remote-ssh" })
 }
+
+output "eks_private_key_openssh" {
+  description = "Private key data in OpenSSH PEM (RFC 4716) format"
+  value       = module.key_pair.private_key_openssh
+  sensitive   = true
+}
+
+output "eks_private_key_pem" {
+  description = "Private key data in PEM (RFC 1421) format"
+  value       = module.key_pair.private_key_pem
+  sensitive   = true
+}

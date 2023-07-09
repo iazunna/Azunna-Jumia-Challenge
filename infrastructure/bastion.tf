@@ -78,6 +78,7 @@ resource "aws_instance" "bastion" {
   subnet_id                   = module.vpc.public_subnets[0]
   vpc_security_group_ids      = [aws_security_group.bastion.id]
   associate_public_ip_address = true
+  key_name = module.key_pair_bastion.key_pair_name
 
   root_block_device {
     volume_size = 20
@@ -101,3 +102,24 @@ resource "aws_instance" "bastion" {
   }
 }
 
+module "key_pair_bastion" {
+  source  = "terraform-aws-modules/key-pair/aws"
+  version = "~> 2.0"
+
+  key_name_prefix    = "bastion"
+  create_private_key = true
+
+  tags = local.tags
+}
+
+output "bastion_private_key_openssh" {
+  description = "Private key data in OpenSSH PEM (RFC 4716) format"
+  value       = module.key_pair_bastion.private_key_openssh
+  sensitive   = true
+}
+
+output "bastion_private_key_pem" {
+  description = "Private key data in PEM (RFC 1421) format"
+  value       = module.key_pair_bastion.private_key_pem
+  sensitive   = true
+}

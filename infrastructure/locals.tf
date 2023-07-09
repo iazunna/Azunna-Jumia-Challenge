@@ -1,12 +1,16 @@
 data "aws_availability_zones" "available" {}
 
 locals {
+  # Common
   name    = "jumia-phone-validator"
   db_name = "validator_backend"
   tags = {
     Managed-by  = "Terraform"
     Environment = "dev"
   }
+  # ECR
+  repositories = ["validator-backend", "validator-frontend"]
+
   # Networking Locals
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)
   region   = "eu-west-2"
