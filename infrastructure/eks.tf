@@ -50,6 +50,11 @@ module "eks" {
         "system:nodes",
       ]
     },
+    {
+      rolearn = aws_iam_role.admin_role.arn
+      username = "adminuser:{{SessionName}}"
+      groups   = ["system:masters"]
+    }
   ]
 
 
