@@ -67,8 +67,8 @@ resource "kubernetes_secret" "jenkins" {
   }
 
   data = {
-    username = var.github_username
-    password = var.github_password
+    github-username = var.github_username
+    github-password = var.github_password
   }
 
 }
