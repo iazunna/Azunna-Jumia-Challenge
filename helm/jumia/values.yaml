@@ -67,14 +67,14 @@ ingress:
     # kubernetes.io/ingress.class: alb
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: phone-validator.demo.internal
+    - host: phone-validator.jumia-challenge.com
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls: 
    - secretName: phone-validator-tls
      hosts:
-       - phone-validator.demo.internal
+       - phone-validator.jumia-challenge.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

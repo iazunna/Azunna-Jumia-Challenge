@@ -42,7 +42,7 @@ metadata:
   namespace: cert-manager
 spec:
   acme:
-    email: jumia@demo.internal
+    email: admin@jumia-challenge.com
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # Secret resource that will be used to store the account's private key.
