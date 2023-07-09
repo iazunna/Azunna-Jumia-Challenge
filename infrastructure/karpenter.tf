@@ -12,9 +12,7 @@ module "karpenter" {
 resource "helm_release" "karpenter" {
   repository_username = "anonymous"
   repository_password = ""
-  lifecycle {
-    ignore_changes = [ repository_password ]
-  }
+
   name             = "karpenter"
   repository       = "oci://public.ecr.aws/karpenter"
   chart            = "karpenter"

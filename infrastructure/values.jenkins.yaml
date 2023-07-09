@@ -3,6 +3,7 @@ controller:
     - github:1.37.1
     - junit:1217.v4297208a_a_b_ce
     - aws-credentials:191.vcb_f183ce58b_9
+    - role-strategy:665.v4d4f871dc768
   existingSecret: github-credentials
   JCasC:
     configScripts:
