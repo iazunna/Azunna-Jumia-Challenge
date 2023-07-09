@@ -19,23 +19,23 @@ controller:
                   password: ${github-password}
                   scope: GLOBAL
                   username: ${github-username}
-      role-strategy: |
-        jenkins:
-          authorizationStrategy:
-            roleBased:
-              roles:
-                global:
-                  - name: "admin"
-                    description: "Jenkins administrators"
-                    permissions:
-                      - "Overall/Administer"
+      # role-strategy: |
+      #   jenkins:
+      #     authorizationStrategy:
+      #       roleBased:
+      #         roles:
+      #           global:
+      #             - name: "admin"
+      #               description: "Jenkins administrators"
+      #               permissions:
+      #                 - "Overall/Administer"
                       
-      awssecrets: |
-        unclassified:
-          awsCredentialsProvider:
-            endpointConfiguration:
-              serviceEndpoint: https://secretsmanager.eu-west-1.amazonaws.com
-              signingRegion: eu-west-2
+      # awssecrets: |
+      #   unclassified:
+      #     awsCredentialsProvider:
+      #       endpointConfiguration:
+      #         serviceEndpoint: https://secretsmanager.eu-west-1.amazonaws.com
+      #         signingRegion: eu-west-2
 
   jenkinsUrl: jenkins.demo.internal
   ingress:
