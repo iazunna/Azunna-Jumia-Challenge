@@ -18,7 +18,7 @@ resource "helm_release" "karpenter" {
     ignore_changes = [ repository_password ]
   }
   name             = "karpenter"
-  repository       = "oci://public.ecr.aws/karpenter/karpenter"
+  repository       = "oci://public.ecr.aws/karpenter"
   chart            = "karpenter"
   version          = "0.9.0"
   namespace        = "karpenter"
