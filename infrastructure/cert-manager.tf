@@ -9,7 +9,7 @@ resource "helm_release" "cert_manager" {
   values           = [file("values.cert-manager.yaml")]
 
   set {
-    name  = "serviceAccount.automountServiceAccountToken"
+    name  = "installCRDs"
     value = "true"
   }
 
