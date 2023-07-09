@@ -5,6 +5,8 @@ controller:
     - aws-credentials:191.vcb_f183ce58b_9
     - role-strategy:665.v4d4f871dc768
   existingSecret: github-credentials
+  additionalExistingSecrets:
+    - name: github-credentials
   JCasC:
     configScripts:
       jenkins-casc-configs: |
@@ -28,9 +30,6 @@ controller:
                     description: "Jenkins administrators"
                     permissions:
                       - "Overall/Administer"
-                    assignments:
-                      - "admin"
-                      - "Jenkins Admins"
                       
       awssecrets: |
         unclassified:
