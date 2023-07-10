@@ -33,22 +33,37 @@ resource "aws_route53_record" "dvo" {
 resource "aws_acm_certificate_validation" "cert_validation" {
   certificate_arn         = aws_acm_certificate.cert.arn
   validation_record_fqdns = [for record in aws_route53_record.dvo : record.fqdn]
+  depends_on = [ 
+    aws_route53domains_registered_domain.jumia_challenge
+   ]
 }
 
+resource "aws_route53domains_registered_domain" "jumia_challenge" {
+  domain_name = "jumia-devops-challenge.eu"
 
-resource "aws_route53_zone" "devops" {
-  name = "devops.jumia-devops-challenge.eu"
+  dynamic name_server {
+    for_each = aws_route53_zone.jumia_challenge.name_servers
+    content {
+      name = each.value
+    }
+  }
 
   tags = local.tags
 }
 
-resource "aws_route53_record" "devops-ns" {
-  zone_id = aws_route53_zone.jumia_challenge.zone_id
-  name    = "devops.jumia-devops-challenge.eu"
-  type    = "NS"
-  ttl     = "30"
-  records = aws_route53_zone.devops.name_servers
-}
+# resource "aws_route53_zone" "devops" {
+#   name = "devops.jumia-devops-challenge.eu"
+
+#   tags = local.tags
+# }
+
+# resource "aws_route53_record" "devops-ns" {
+#   zone_id = aws_route53_zone.jumia_challenge.zone_id
+#   name    = "devops.jumia-devops-challenge.eu"
+#   type    = "NS"
+#   ttl     = "30"
+#   records = aws_route53_zone.devops.name_servers
+# }
 
 # resource "aws_kms_key" "jumia_zone_key" {
 #   provider = aws.kms_dnssec
