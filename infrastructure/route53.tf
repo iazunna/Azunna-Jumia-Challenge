@@ -145,7 +145,7 @@ resource "aws_route53_hosted_zone_dnssec" "jumia_challenge" {
 
 resource "aws_route53_key_signing_key" "devops_jumia_zone_key" {
   hosted_zone_id             = aws_route53_zone.devops.id
-  key_management_service_arn = aws_kms_key.dev_ops_jumia_zone_key
+  key_management_service_arn = aws_kms_key.dev_ops_jumia_zone_key.arn
   name                       = "jumiachallengezonekey"
 }
 
