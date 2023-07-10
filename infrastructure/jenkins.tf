@@ -48,6 +48,7 @@ resource "helm_release" "jenkins" {
   depends_on = [
     module.eks,
     helm_release.ingress,
+    helm_release.ingress_nginx,
     helm_release.external_dns,
     helm_release.cert_manager,
     kubernetes_secret.jenkins,
