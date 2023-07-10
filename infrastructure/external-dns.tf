@@ -1,7 +1,4 @@
 resource "helm_release" "external_dns" {
-  repository_username = "anonymous"
-  repository_password = ""
-
   name             = "external-dns"
   repository       = "https://charts.bitnami.com/bitnami"
   chart            = "external-dns"
