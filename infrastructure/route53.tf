@@ -18,7 +18,7 @@ resource "aws_route53_record" "devops-ns" {
 }
 
 resource "aws_kms_key" "jumia_zone_key" {
-  region = "us-east-1"
+  provider = aws.kms_dnssec
   customer_master_key_spec = "ECC_NIST_P256"
   deletion_window_in_days  = 7
   key_usage                = "SIGN_VERIFY"
