@@ -37,7 +37,7 @@ controller:
       #         serviceEndpoint: https://secretsmanager.eu-west-1.amazonaws.com
       #         signingRegion: eu-west-2
 
-  jenkinsUrl: jenkins.jumia-devops-challenge.eu
+  jenkinsUrl: jenkins.devops.jumia-devops-challenge.eu
   serviceType: NodePort
   ingress:
     enabled: true
@@ -68,11 +68,11 @@ controller:
     # Set this path to jenkinsUriPrefix above or use annotations to rewrite path
     # path: "/jenkins"
     # configures the hostname e.g. jenkins.example.com
-    hostName: jenkins.jumia-devops-challenge.eu
+    hostName: jenkins.devops.jumia-devops-challenge.eu
     tls:
     - secretName: jenkins-controller-tls
       hosts:
-        - jenkins.jumia-devops-challenge.eu
+        - jenkins.devops.jumia-devops-challenge.eu
 
   prometheus:
     enabled: false

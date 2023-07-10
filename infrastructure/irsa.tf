@@ -24,7 +24,7 @@ module "cert_manager_irsa" {
   role_name_prefix           = "CERT-MANAGER-IRSA"
   create_role                = true
   attach_cert_manager_policy = true
-  cert_manager_hosted_zone_arns = [aws_route53_zone.jumia-challenge.arn]
+  cert_manager_hosted_zone_arns = [aws_route53_zone.jumia-challenge.arn, aws_route53_zone.devops.arn]
 
   oidc_providers = {
     main = {
@@ -85,6 +85,25 @@ module "ext_secrets_irsa" {
     main = {
       provider_arn               = module.eks.oidc_provider_arn
       namespace_service_accounts = ["external-secrets:external-secrets-sa"]
+    }
+  }
+
+  tags = local.tags
+}
+
+module "ext_dns_irsa" {
+  source  = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version = "~> 5.0"
+
+  role_name_prefix               = "EXT-DNS-IRSA"
+  create_role                    = true
+  attach_external_dns_policy = true
+  external_dns_hosted_zone_arns = [aws_route53_zone.jumia-challenge.arn, aws_route53_zone.devops.arn]
+
+  oidc_providers = {
+    main = {
+      provider_arn               = module.eks.oidc_provider_arn
+      namespace_service_accounts = ["external-dns:external-dns-sa"]
     }
   }
 
