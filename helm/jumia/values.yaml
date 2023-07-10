@@ -67,6 +67,7 @@ ingress:
   annotations: 
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/certificate-arn: 'arn:aws:acm:us-east-1:992122884453:certificate/99876741-2cbb-4575-8a42-ee3aad6a6018'
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     cert-manager.io/cluster-issuer: letsencrypt-test
     external-dns.alpha.kubernetes.io/hostname: phone-validator.jumia-devops-challenge.eu
@@ -76,8 +77,12 @@ ingress:
   hosts:
     - host: phone-validator.jumia-devops-challenge.eu
       paths:
-        - path: /
-          pathType: ImplementationSpecific
+        frontend:
+          - path: /
+            pathType: ImplementationSpecific
+        backend:
+          - path: /api
+            pathType: ImplementationSpecific
   tls: 
    - secretName: phone-validator-tls
      hosts:
