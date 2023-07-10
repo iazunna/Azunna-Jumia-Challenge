@@ -41,6 +41,11 @@ resource "helm_release" "ingress_nginx" {
   atomic     = true
 
   set {
+    name  = "controller.service.annotations.external-dns\\.alpha\\.kubernetes\\.io/hostname"
+    value = aws_route53_zone.jumia_challenge.id
+  }
+
+  set {
     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-ssl-cert"
     value = aws_acm_certificate.cert.arn
   }

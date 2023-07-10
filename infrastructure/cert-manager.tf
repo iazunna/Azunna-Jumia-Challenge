@@ -31,7 +31,7 @@ resource "helm_release" "cert_manager" {
     module.eks,
     helm_release.ingress,
     aws_route53_zone.jumia_challenge,
-    aws_route53_zone.devops
+    # aws_route53_zone.devops
   ]
 }
 
@@ -61,6 +61,6 @@ EOF
   depends_on = [
     helm_release.cert_manager, 
     aws_route53_zone.jumia_challenge,
-    aws_route53_zone.devops
+    # aws_route53_zone.devops
   ]
 }
