@@ -1,5 +1,5 @@
 resource "aws_route53_zone" "jumia-challenge" {
-  name = "jumia-challenge.eu"
+  name = "jumia-devops-challenge.eu"
   tags = local.tags
   # vpc {
   #   vpc_id = module.vpc.vpc_id
