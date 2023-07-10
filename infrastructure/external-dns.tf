@@ -3,7 +3,7 @@ resource "helm_release" "external_dns" {
   repository_password = ""
 
   name             = "external-dns"
-  repository       = "oci://registry-1.docker.io/bitnamicharts/external-dns"
+  repository       = "https://charts.bitnami.com/bitnami"
   chart            = "external-dns"
   version          = "6.20.4"
   namespace        = "external-dns"
