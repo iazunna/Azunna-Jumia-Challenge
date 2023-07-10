@@ -56,7 +56,7 @@ controller:
     apiVersion: "networking.k8s.io/v1"
     labels: {}
     annotations:
-      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/scheme: internal #internet-facing
       alb.ingress.kubernetes.io/target-type: ip
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
       cert-manager.io/cluster-issuer: letsencrypt-test
