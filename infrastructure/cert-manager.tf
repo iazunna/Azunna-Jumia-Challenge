@@ -51,6 +51,10 @@ spec:
       - dns01:
           route53:
             region: ${local.region}
+        selector:
+          dnsZones:
+            - jumia-challenge.eu
+            - '*.jumia-challenge.eu'
 EOF
   depends_on = [helm_release.cert_manager, aws_route53_zone.jumia-challenge]
 }
