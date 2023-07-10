@@ -53,6 +53,7 @@ resource "helm_release" "external_dns" {
   }
   depends_on = [
     module.eks,
-    helm_release.ingress
+    helm_release.ingress,
+    aws_route53_zone.jumia_challenge
   ]
 }

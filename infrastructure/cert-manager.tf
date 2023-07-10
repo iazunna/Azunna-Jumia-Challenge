@@ -30,7 +30,8 @@ resource "helm_release" "cert_manager" {
   depends_on = [
     module.eks,
     helm_release.ingress,
-    aws_route53_zone.jumia-challenge
+    aws_route53_zone.jumia_challenge,
+    aws_route53_zone.devops
   ]
 }
 
@@ -57,5 +58,9 @@ spec:
             - 'jumia-devops-challenge.eu'
             - '*.jumia-devops-challenge.eu'
 EOF
-  depends_on = [helm_release.cert_manager, aws_route53_zone.jumia-challenge]
+  depends_on = [
+    helm_release.cert_manager, 
+    aws_route53_zone.jumia_challenge,
+    aws_route53_zone.devops
+  ]
 }
