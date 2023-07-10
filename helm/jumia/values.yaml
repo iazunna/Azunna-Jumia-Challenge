@@ -62,13 +62,15 @@ service:
     port: 8080
 
 ingress:
-  enabled: false
+  enabled: true
   className: "alb"
   annotations: 
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     cert-manager.io/cluster-issuer: letsencrypt-test
+    external-dns.alpha.kubernetes.io/hostname: phone-validator.jumia-devops-challenge.eu
+
     # kubernetes.io/ingress.class: alb
     # kubernetes.io/tls-acme: "true"
   hosts:
