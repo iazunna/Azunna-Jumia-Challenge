@@ -1,4 +1,7 @@
 resource "helm_release" "external_dns" {
+  repository_username = "anonymous"
+  repository_password = ""
+
   name             = "external-dns"
   repository       = "oci://registry-1.docker.io/bitnamicharts/external-dns"
   chart            = "external-dns"

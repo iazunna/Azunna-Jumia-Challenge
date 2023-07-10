@@ -55,7 +55,7 @@ resource "aws_kms_key" "jumia_zone_key" {
 resource "aws_route53_key_signing_key" "jumia_zone_key" {
   hosted_zone_id             = aws_route53_zone.jumia-challenge.id
   key_management_service_arn = aws_kms_key.jumia_zone_key.arn
-  name                       = "example"
+  name                       = "jumia_challenge_zone_key"
 }
 
 resource "aws_route53_hosted_zone_dnssec" "example" {
