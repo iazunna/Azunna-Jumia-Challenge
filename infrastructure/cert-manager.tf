@@ -42,7 +42,7 @@ metadata:
   namespace: cert-manager
 spec:
   acme:
-    email: admin@jumia-challenge.com
+    email: admin@jumia-challenge.eu
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # Secret resource that will be used to store the account's private key.
@@ -52,5 +52,5 @@ spec:
           route53:
             region: ${local.region}
 EOF
-  depends_on = [helm_release.cert_manager]
+  depends_on = [helm_release.cert_manager, aws_route53_zone.jumia-challenge]
 }

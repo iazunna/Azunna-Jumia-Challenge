@@ -72,7 +72,7 @@ controller:
     tls:
     - secretName: jenkins-controller-tls
       hosts:
-        - jenkins.jumia-challenge.com
+        - jenkins.jumia-challenge.eu
 
   prometheus:
     enabled: false
