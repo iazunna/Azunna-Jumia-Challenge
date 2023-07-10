@@ -37,6 +37,7 @@ resource "helm_release" "ingress_nginx" {
   chart      = "ingress-nginx"
   version    = "4.7.1"
   namespace  = "ingress-nginx"
+  create_namespace = true
   atomic     = true
 
   set {
