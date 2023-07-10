@@ -1,4 +1,4 @@
-resource "aws_route53_zone" "jumia-challenge" {
+resource "aws_route53_zone" "jumia_challenge" {
   name = "jumia-devops-challenge.eu"
   tags = local.tags
 }
@@ -10,7 +10,7 @@ resource "aws_route53_zone" "devops" {
 }
 
 resource "aws_route53_record" "devops-ns" {
-  zone_id = aws_route53_zone.jumia-challenge.zone_id
+  zone_id = aws_route53_zone.jumia_challenge.zone_id
   name    = "devops.jumia-devops-challenge.com"
   type    = "NS"
   ttl     = "30"
@@ -131,12 +131,12 @@ resource "aws_kms_key" "dev_ops_jumia_zone_key" {
 
 
 resource "aws_route53_key_signing_key" "jumia_zone_key" {
-  hosted_zone_id             = aws_route53_zone.jumia-challenge.id
+  hosted_zone_id             = aws_route53_zone.jumia_challenge.id
   key_management_service_arn = aws_kms_key.jumia_zone_key.arn
   name                       = "jumiachallengezonekey"
 }
 
-resource "aws_route53_hosted_zone_dnssec" "jumia-challenge" {
+resource "aws_route53_hosted_zone_dnssec" "jumia_challenge" {
   depends_on = [
     aws_route53_key_signing_key.jumia_zone_key
   ]
@@ -144,12 +144,12 @@ resource "aws_route53_hosted_zone_dnssec" "jumia-challenge" {
 }
 
 resource "aws_route53_key_signing_key" "devops_jumia_zone_key" {
-  hosted_zone_id             = aws_route53_zone.jumia-challenge.id
+  hosted_zone_id             = aws_route53_zone.devops.id
   key_management_service_arn = aws_kms_key.dev_ops_jumia_zone_key
   name                       = "jumiachallengezonekey"
 }
 
-resource "aws_route53_hosted_zone_dnssec" "jumia-challenge" {
+resource "aws_route53_hosted_zone_dnssec" "dev_ops_jumia_challenge" {
   depends_on = [
     aws_route53_key_signing_key.devops_jumia_zone_key
   ]
