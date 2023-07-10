@@ -29,7 +29,8 @@ resource "helm_release" "cert_manager" {
   }
   depends_on = [
     module.eks,
-    helm_release.ingress
+    helm_release.ingress,
+    aws_route53_zone.jumia-challenge
   ]
 }
 
