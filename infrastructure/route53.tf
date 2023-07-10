@@ -44,7 +44,7 @@ resource "aws_route53domains_registered_domain" "jumia_challenge" {
   dynamic name_server {
     for_each = toset(aws_route53_zone.jumia_challenge.name_servers)
     content {
-      name = each.name_server.value
+      name = name_server.value
     }
   }
 
