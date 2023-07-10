@@ -43,15 +43,12 @@ metadata:
 spec:
   acme:
     email: admin@jumia-challenge.com
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       # Secret resource that will be used to store the account's private key.
       name: letsencrypt-test-issuer-account-key
     solvers:
-      - selector:
-          dnsZones:
-            - "jumia-challenge.com"
-        dns01:
+      - dns01:
           route53:
             region: ${local.region}
 EOF
