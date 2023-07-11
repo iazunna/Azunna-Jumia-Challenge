@@ -93,7 +93,7 @@ module "eks" {
     # and then turn this off after the cluster/node group is created. Without this initial policy,
     # the VPC CNI fails to assign IPs and nodes cannot join the cluster
     # See https://github.com/aws/containers-roadmap/issues/1666 for more context
-    iam_role_attach_cni_policy = false
+    iam_role_attach_cni_policy = true
 
     ebs_optimized     = true
     enable_monitoring = true
@@ -265,4 +265,14 @@ output "eks_private_key_pem" {
   description = "Private key data in PEM (RFC 1421) format"
   value       = module.key_pair.private_key_pem
   sensitive   = true
+}
+
+output "eks_public_key_openssh" {
+  description = "Public key data in OpenSSH PEM (RFC 4716) format"
+  value       = module.key_pair.public_key_openssh
+}
+
+output "eks_public_key_pem" {
+  description = "Private key data in PEM (RFC 1421) format"
+  value       = module.key_pair.public_key_pem
 }

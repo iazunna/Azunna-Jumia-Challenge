@@ -9,7 +9,7 @@ locals {
     Environment = "dev"
   }
   # ECR
-  repositories = ["validator-backend", "validator-frontend"]
+  repositories = ["validator-backend", "validator-frontend", "helm-chart"]
 
   # Networking Locals
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)

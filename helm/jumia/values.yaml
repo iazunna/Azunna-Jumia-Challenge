@@ -6,10 +6,10 @@ replicaCount: 3
 
 image:
   frontend:
-    repository: 992122884453.dkr.ecr.eu-west-2.amazonaws.com/validator-frontend
+    repository: '{{aws_account_id}}.dkr.ecr.eu-west-2.amazonaws.com/validator-frontend'
     tag: "v0.0.1"
   backend:
-    repository: 992122884453.dkr.ecr.eu-west-2.amazonaws.com/validator-backend
+    repository: '{{aws_account_id}}.dkr.ecr.eu-west-2.amazonaws.com/validator-backend'
     tag: "v0.0.1"
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.

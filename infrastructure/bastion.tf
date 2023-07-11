@@ -123,3 +123,13 @@ output "bastion_private_key_pem" {
   value       = module.key_pair_bastion.private_key_pem
   sensitive   = true
 }
+
+output "bastion_public_key_openssh" {
+  description = "The public key data in \"Authorized Keys\" format. This is populated only if the configured private key is supported: this includes all `RSA` and `ED25519` keys"
+  value       = module.key_pair_bastion.public_key_openssh
+}
+
+output "gastion_public_key_pem" {
+  description = "Public key data in PEM (RFC 1421) format"
+  value       = module.key_pair_bastion.public_key_pem
+}
