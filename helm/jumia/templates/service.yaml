@@ -8,12 +8,12 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.frontend.port }}
-      targetPort: http
+      targetPort: frontend
       protocol: TCP
-      name: http
+      name: frontend
     - port: {{ .Values.service.backend.port }}
-      targetPort: http
+      targetPort: backend
       protocol: TCP
-      name: http
+      name: backend
   selector:
     {{- include "jumia.selectorLabels" . | nindent 4 }}
