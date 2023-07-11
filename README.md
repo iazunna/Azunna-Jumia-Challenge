@@ -26,6 +26,4 @@ terraform apply -auto-approve
 
 ## Run Migrations
 
-
-
-# Notes
+- use `scripts/db-migrations.sh` on the bastion host to run migrations.
