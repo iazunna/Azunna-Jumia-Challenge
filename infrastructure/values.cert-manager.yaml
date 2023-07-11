@@ -4,9 +4,6 @@ automountServiceAccountToken: false
 serviceAccount:
   automountServiceAccountToken: false
 
-extraArgs:
-  - --issuer-ambient-credentials
-
 securityContext:
   fsGroup: 1001
   
