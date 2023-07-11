@@ -1,6 +1,6 @@
 
 locals {
-  zone_recursive_ns = join(":53,", aws_route53_zone.jumia_challenge.name_servers)
+  zone_recursive_ns = join("\\:53\\,", aws_route53_zone.jumia_challenge.name_servers)
 }
 resource "helm_release" "cert_manager" {
   name             = "cert-manager"
@@ -34,7 +34,7 @@ resource "helm_release" "cert_manager" {
 
   set {
     name = "extraArgs[2]"
-    value = "\"--dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53,${local.zone_recursive_ns}:53\""
+    value = "\"--dns01-recursive-nameservers=8.8.8.8\\:53\\,1.1.1.1\\:53\\,${local.zone_recursive_ns}\\:53\""
   }
 
   set {
