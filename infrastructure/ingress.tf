@@ -41,7 +41,7 @@ resource "helm_release" "ingress_nginx" {
   atomic     = true
 
   set {
-    name  = "controller.service.targetports.https"
+    name  = "controller.service.targetPorts.https"
     value = "http"
   }
 
