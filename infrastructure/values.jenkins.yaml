@@ -38,7 +38,7 @@ controller:
       #         signingRegion: eu-west-2
 
   jenkinsUrl: jenkins.jumia-devops-challenge.eu
-  serviceType: ClusterIp
+  serviceType: ClusterIP
   ingress:
     enabled: true
     # Override for the default paths that map requests to the backend
