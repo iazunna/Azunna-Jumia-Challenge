@@ -40,6 +40,7 @@ resource "aws_acm_certificate_validation" "cert_validation" {
 
 resource "aws_route53domains_registered_domain" "jumia_challenge" {
   domain_name = "jumia-devops-challenge.eu"
+  transfer_lock = false
 
   dynamic name_server {
     for_each = toset(aws_route53_zone.jumia_challenge.name_servers)
