@@ -34,7 +34,7 @@ resource "helm_release" "cert_manager" {
 
   set {
     name = "extraArgs[2]"
-    value = "--dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53,${local.zone_recursive_ns}"
+    value = "\"--dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53,${local.zone_recursive_ns}:53\""
   }
 
   set {
