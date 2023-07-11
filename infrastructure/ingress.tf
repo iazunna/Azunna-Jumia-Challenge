@@ -41,8 +41,13 @@ resource "helm_release" "ingress_nginx" {
   atomic     = true
 
   set {
+    name  = "controller.service.targetports.https"
+    value = "http"
+  }
+
+  set {
     name  = "controller.service.annotations.external-dns\\.alpha\\.kubernetes\\.io/hostname"
-    value = aws_route53_zone.jumia_challenge.id
+    value = aws_route53domains_registered_domain.jumia_challenge.id
   }
 
   set {
